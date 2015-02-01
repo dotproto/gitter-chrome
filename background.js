@@ -1,18 +1,18 @@
 'use strict';
 
-var debug = true;
+var enableDebug = true;
 
 function log() {
   console.log.apply(console, arguments);
 }
 
 function debug() {
-  if (debug) {
+  if (enableDebug) {
     console.debug.apply(console, arguments);
   }
 }
 
-function promiseChain(opts) {
+function chain(opts) {
   return new Promise(function(resolve, reject) {
     resolve(opts);
   })
@@ -85,7 +85,7 @@ function roomCheck(room) {
   return new Promise(function(resolve, reject) {
     var req = new XMLHttpRequest();
     req.addEventListener('load', function(){
-      console.info('API resp', room.owner + room.name)
+      debug('API resp', room.owner + room.name)
       req.tabId = room.tabId;
       resolve(req);
     }, false);
@@ -94,9 +94,10 @@ function roomCheck(room) {
     room.name = room.name ? '/' + room.name : '';
     var host = 'http://localhost:3000/room/';
     var url = host + room.owner + room.name;
+
     req.open('GET', url, true);
     req.setRequestHeader('Content-Type', 'application/json');
-    console.info('API req', room.owner + room.name)
+    debug('API req', room.owner + room.name);
     req.send();
   });
 }
@@ -114,6 +115,7 @@ function updatePageAction(tabId, tab) {
         roomCheckError
       );
   } else {
+    debug('END: Dropping', parser.href);
     // noop - we don't care about this URL
   }
 }
@@ -124,18 +126,18 @@ function updatePageAction(tabId, tab) {
 function onActivated(activeInfo) {
   var tabId = activeInfo.tabId;
   chrome.tabs.get(tabId, function(tab) {
-    console.info('enter onActivated', tab.url);
+    debug('START: onActivated', tab.url);
     updatePageAction(tabId, tab);
   });
 }
 
 function onCreated(tab) {
-  console.info('enter onCreated', tab.url);
+  debug('START: onCreated', tab.url);
   updatePageAction(tab.id, tab);
 }
 
 function onUpdated(tabId, changeInfo, tab) {
-  console.info('enter onUpdate', tab.url);
+  debug('START: onUpdate', tab.url);
   updatePageAction(tabId, tab);
 }
 
