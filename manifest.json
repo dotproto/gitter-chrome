@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Gitter Helper",
+  "description": "This extension shows a Google Image search result for the current page",
+  "version": "1.0",
+
+  "options_page": "options/index.html",
+
+  "background": {
+    "scripts": [ "background.js" ]
+  },
+
+  "page_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "tabs",   /* Required to access the URL of the current page (to check) */
+    "storage" /* Required to sync extension settings across browsers */
+  ]
+}
