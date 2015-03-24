@@ -45,6 +45,17 @@ function getRoomFromTab(tab) {
   });
 }
 
+function getRoomUrl() {
+  var url = 'https://gitter.im';
+
+  return getRoomFromTab()
+    .then(function(room){
+      url += room.owner ? '/' + room.owner : '' ;
+      url += room.name  ? '/' + room.name  : ''
+      return url;
+    });
+}
+
 function roomCheckSuccess(request) {
   // TODO: Improve status checks once API provides additional data
   // 
@@ -85,7 +96,7 @@ function roomCheck(room) {
   return new Promise(function(resolve, reject) {
     var req = new XMLHttpRequest();
     req.addEventListener('load', function(){
-      debug('API resp', room.owner + room.name)
+      debug('API resp for ' + room.owner + room.name + ' (' + req.status + ')');
       req.tabId = room.tabId;
       resolve(req);
     }, false);
@@ -115,7 +126,7 @@ function updatePageAction(tabId, tab) {
         roomCheckError
       );
   } else {
-    debug('END: Dropping', parser.href);
+    debug('FINSH: Dropping', parser.href);
     // noop - we don't care about this URL
   }
 }
@@ -137,16 +148,23 @@ function onCreated(tab) {
 }
 
 function onUpdated(tabId, changeInfo, tab) {
-  debug('START: onUpdate', tab.url);
-  updatePageAction(tabId, tab);
+  if (changeInfo.status === "loading") {
+    debug('START: onUpdate', tab.url, changeInfo);
+    updatePageAction(tabId, tab);
+  } else {
+    debug('IGNOR: onUpdated', tab.url);
+  }
 }
 
 function actionClicked() {
   // TODO: Rather than create a new tab every time, switch to the appropriate tab
-  chrome.tabs.create({
-    active: true,
-    url: 'https://gitter.im/' + getRoomPath()
-  }, function(){ /* ... */});
+  getRoomUrl()
+    .then(function(url) {
+      chrome.tabs.create({
+        active: true,
+        url: url
+      }, function(){ /* ... */ });
+    });
 }
 
 // -- Register tab event handlers ----------------------------------------------
