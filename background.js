@@ -1,6 +1,6 @@
 'use strict';
 
-var enableDebug = true;
+var enableDebug = false;
 
 function log() {
   console.log.apply(console, arguments);
@@ -12,6 +12,7 @@ function debug() {
   }
 }
 
+// Simple utility to start a promise chain
 function chain(opts) {
   return new Promise(function(resolve, reject) {
     resolve(opts);
@@ -103,7 +104,7 @@ function roomCheck(room) {
     req.addEventListener('error', reject, false);
 
     room.name = room.name ? '/' + room.name : '';
-    var host = 'http://localhost:3000/room/';
+    var host = 'http://gitter-ext-server.herokuapp.com/room/';
     var url = host + room.owner + room.name;
 
     req.open('GET', url, true);
