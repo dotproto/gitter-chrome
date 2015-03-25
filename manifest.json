@@ -4,9 +4,7 @@
   "name": "Gitter Helper for GitHub",
   "short_name": "GitterHelper",
   "description": "This extension makes it easy to see if a GitHub project has a Gitter room.",
-  "version": "1.0.1",
-
-  "options_page": "options/index.html",
+  "version": "1.0.3",
 
   "background": {
     "scripts": [ "background.js" ],
@@ -19,6 +17,5 @@
   },
   "permissions": [
     "tabs",   /* Required to access the URL of the current page (to check) */
-    "storage" /* Required to sync extension settings across browsers */
   ]
 }
