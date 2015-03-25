@@ -16,6 +16,6 @@
     "default_title": "Open Gitter room"
   },
   "permissions": [
-    "tabs",   /* Required to access the URL of the current page (to check) */
+    "tabs"  /* Required to access the URL of the current page (to check) */
   ]
 }
