@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "Gitter Helper",
-  "description": "This extension shows a Google Image search result for the current page",
-  "version": "1.0",
+  "name": "Gitter Helper for GitHub",
+  "short_name": "GitterHelper",
+  "description": "This extension makes it easy to see if a GitHub project has a Gitter room.",
+  "version": "1.0.1",
 
   "options_page": "options/index.html",
 
