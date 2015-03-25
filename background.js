@@ -50,8 +50,8 @@ function getRoomUrl() {
 
   return getRoomFromTab()
     .then(function(room){
-      url += room.owner ? '/' + room.owner : '' ;
-      url += room.name  ? '/' + room.name  : ''
+      url += room.owner ? '/' + room.owner : '';
+      url += room.name  ? '/' + room.name  : '';
       return url;
     });
 }
